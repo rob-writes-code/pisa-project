@@ -1,0 +1,4 @@
+.DS_Store
+/pisa-project-venv
+.env
+batching-project.pem
