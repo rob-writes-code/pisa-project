@@ -1,8 +1,6 @@
 # PISA Project
 
-# Data Engineering Final Project
-
-Welcome to the Forage Dashboard repository! This project is a part of the Data Engineering Makers specialist track and aims to create a real-time dashboard for Global Education Insights (GEI) to visualise and interpret data from the PISA 2018 dataset.
+The final project of the Makers Data Engineering specialist track. This was a team project, completed with two others.
 
 ## About Global Education Insights (GEI)
 
