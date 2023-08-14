@@ -6,11 +6,14 @@ from airflow.models import Variable
 import logging
 import pandas as pd
 
+# List of country codes to process
 country_codes = [
     'alb','arg','aus','aut','bel','bgr','bih','blr','bra','brn',
     'can','che','chl','col','cri','cze','deu','dnk','dom','esp'
     ]
 
+# Task to get the offset for each country in analytical db
+# This acts as a bookmark, to extract only new submissions of data
 def get_offset():
     src_db = PostgresHook(postgres_conn_id="analytical_db_rds")
     src_conn = src_db.get_conn()
@@ -30,16 +33,18 @@ def get_offset():
             count = 0
             logging.info(f"Reason for failure: {e}")
 
+        # Set the offset as a Variable to be used in a later Task
         Variable.set(f'{country_code}_count', count)
     src_conn.close()
 
+# Task to extract from source databases and push data to Xcom
 def extract(**kwargs):
-        
     for country_code in country_codes:
         src_db = PostgresHook(postgres_conn_id=f"seta-{country_code}")
         src_conn = src_db.get_conn()
         count = Variable.get(f'{country_code}_count')
 
+        # Fetch data using the offset to only get new submissions
         df = pd.read_sql(
             f'''
             SELECT id, cnt, escs, tmins, belong, durecec
@@ -49,17 +54,17 @@ def extract(**kwargs):
             src_conn
         )
 
-
+        # Push extracted data to Xcom for use in next Task
         kwargs['ti'].xcom_push(key=country_code, value=df.to_json())
         logging.info(f"Extract function: pushing dataset to Xcom")
     src_conn.close()
 
 
+# Task to load data into analytical db
 def load(**kwargs):
     target_db = PostgresHook(postgres_conn_id="analytical_db_rds")
 
-    # Here we set up id and cnt to be a composite key, in the event that ids on their own are 
-    # not unique across the different countries
+    # Create table in analytical db with composite primary key to prevent duplication of data
     create_posts_table = '''
     CREATE TABLE IF NOT EXISTS pisa (
     id INT,
@@ -73,7 +78,7 @@ def load(**kwargs):
     );
     '''
 
-    
+    # Insert data into table, update existing entry with new values if conflict
     load_post_data = '''
     INSERT INTO pisa (id, cnt, escs, tmins, belong, durecec, time_submitted)
     VALUES (%s, %s, %s, %s, %s, %s, %s)
@@ -85,6 +90,7 @@ def load(**kwargs):
     time_submitted=EXCLUDED.time_submitted;
     '''
     
+    # Pull data from Xcom and load into DataFrame
     for country_code in country_codes:
         df = pd.read_json(kwargs['ti'].xcom_pull(key=country_code))
         logging.info(f"Load function: pulled dataset from Xcom. DataFrame shape is {df.shape}")
@@ -98,6 +104,7 @@ def load(**kwargs):
         for column in columns:
             df[column] = df[column].replace('NA', None)
 
+        # Load data into analytical db
         with target_db.get_conn() as conn:
                 with conn.cursor() as cursor:
                     cursor.execute(create_posts_table)
@@ -108,7 +115,7 @@ def load(**kwargs):
                     conn.commit()
     conn.close()
 
-
+# Define the DAG
 dag = DAG(
     "pisa_dag",
     description="Extracts data from seta databases and moves to analytical db",
@@ -119,6 +126,7 @@ dag = DAG(
     tags=["PISA"]
 )
 
+# Define tasks
 get_offset_task = PythonOperator(
     task_id="get_offset_task",
     python_callable=get_offset,
@@ -140,4 +148,5 @@ loading_task = PythonOperator(
     dag=dag
 )
 
+# Set order/flow of tasks
 get_offset_task >> extract_task >> loading_task
