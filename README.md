@@ -4,33 +4,47 @@ The final project of the Makers Data Engineering specialist track.
 
 ## Project Overview
 
-The goal of the project was to leverage data engineering skills to analyse the PISA 2018 dataset and develop a functioning dashboard that GEI can use to easily visualise and interpret the data. The project is carried out in a distributed environment in the Cloud to allow for efficient data processing and collaboration.
+The goal of the project was to leverage data engineering skills to analyse the PISA 2018 dataset and develop a functioning dashboard that the client (GEI) can use to easily visualise and interpret the data. 
 
-I completed the project in a team, with two other colleagues.
+The project is carried out in a distributed environment in the Cloud to allow for efficient data processing and collaboration.
+
+It was a team project, which I completed with two other colleagues. We used GitHub throughout the project for version control.
 
 ### About Global Education Insights (GEI)
 
 Global Education Insights (GEI) is a non-profit organisation dedicated to improving education systems worldwide. They work with governments, educational institutions, and stakeholders to provide data-driven insights and recommendations for educational policy and practice.
 
-### About PISA and the Dataset
+### About PISA
 
 PISA is the OECD's "Programme for International Student Assessment", which assesses educational practices around the world and uses its findings to influence policy.
+
+### The Dataset
 
 The dataset used in this project is a real-life dataset, collected in 2018 by PISA. It contains responses from hundreds of thousands of students, teachers and educational facilitators from 79 countries, providing information about their backgrounds and experiences in education.
 
 For more information about the 2018 dataset, please follow this [link](https://www.oecd.org/pisa/data/2018database/).
 
-For the purposes of this project, we took a sample of **20 countries**. Responses were submitted gradually over time, to simulate the real-life scenario of collecting data. 
+For the purposes of this project, we took a sample of **20 countries**. Responses were submitted gradually over time, to simulate the real-life scenario of collecting data.
 
 The dataset began at around 100 responses, but grew to over 100,000 in little over a week's time.
 
+Extract from the raw data:
+![raw_data_extract](/images/raw_data_extract.png)
+
+Structure
+- 20 source databases, each holding data a different country
+- 1,120 columns
+- Column names coded, PISA index required to decode and find insights
+
 ### Project Objectives
+
+The main goal was to turn this unreadable, coded mass of data into something salient and insightful.
 
 The project had three levels of challenge:
 
-- **Level 1:** Develop dashboard charts displaying correct summary data that is no more than an hour old.
-- **Level 2:** Same as Level 1, but the data should be no more than a minute old.
-- **Level 3:** Same as Level 2, but the data should be up-to-the-second.
+- **Level 1:** develop dashboard charts displaying correct summary data that is no more than an hour old.
+- **Level 2:** the data should be no more than a minute old.
+- **Level 3:** the data should be up-to-the-second.
 
 ## Solution Overview
 
@@ -48,7 +62,6 @@ Data Pipeline - Implemented
 ![pipeline_implemented](/images/pipeline_implemented.png)
 
 
-
 ### Stack
 
 The tech stack used in this project.
@@ -61,20 +74,26 @@ Workflow orchestration tool used to pull data from 20 source databases and load 
 
 Tasks and order of flow defined in a Directed Acyclic Graph (DAG):
 
-[pisa_dag](/airflow/pisa_dag.py)
+[PISA DAG](/airflow/pisa_dag.py)
 
 ![overview_of_dag_flow](/images/dag_flow.png)
 
 DAG scheduled to run every 30 seconds to continuously and automatically keep pulling any new submissions, pooling them into a central database on which our dashboard was based.
+
+DAG hosted inside an AWS EC2 instance to keep it running continously, independent from local machines.
 
 Benefits of approach:
 - **Resusable** - code accepts list of countries; more can easily be added to increase scope of project.
 - **Scalable** - designed to only extract new entries to reduce latency. Runtime remained consistent, despite growing dataset.
 - **Data Integrity** - checks made for duplicates and conflicts updated with new values, to ensure integrity and freshness of data.
 
-Disadvantage:
-- Minimum runtime of the DAG was 15 seconds, meaning the analytical database would be slightly out of date / not exactly real-time.
-- Could be improved by reconfiguring concurrency / parallelism settings, or by redesigining project to use a data streaming service, such as Kafka.
+Limitations:
+- Minimum runtime of the DAG was 15 seconds, meaning the analytical database would be slightly out of date / not precisely real-time.
+- Could be improved by reconfiguring concurrency / parallel computing settings, or by redesigining project to use a data streaming service, such as Kafka.
+
+
+### Flask App
+
 
 
 ### Real-Time Data Visualization
