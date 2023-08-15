@@ -94,6 +94,14 @@ Limitations:
 
 ### Flask App
 
+We designed the Flask app to extract data from the analytical database and then perform transformations on it, converting it to a usable format for the metrics dashboard.
+
+The app was then hosted on Render, a Cloud platform service. Our web service supported Continuous Integration/Continous Deployment (CI/CD) practices, and would immediately redeploy each time the app was updated on GitHub.
+
+![web_server_on_render](/images/web_server.png)
+
+Each time a GET request was made to the web service, the app would query the analytical database, providing the most up-to-date data and allowing our dashboard to give real-time insights.
+
 The full code for this app (with comments) can be accessed here, in the 'render' directory of this repository:
 
 [Flask App](/render/app.py)
