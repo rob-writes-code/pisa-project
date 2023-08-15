@@ -4,7 +4,7 @@ The final project of the Makers Data Engineering specialist track.
 
 ## Project Overview
 
-The goal of the project was to leverage data engineering skills to analyse the PISA 2018 dataset and develop a functioning dashboard that the client (GEI) can use to easily visualise and interpret the data. 
+The goal of the project was to analyse the PISA 2018 dataset and develop a functioning dashboard that the client (GEI) can use to easily visualise and interpret the data. 
 
 The project is carried out in a distributed environment in the Cloud to allow for efficient data processing and collaboration.
 
@@ -91,7 +91,6 @@ Limitations:
 - Minimum runtime of the DAG was 15 seconds, meaning the analytical database would be slightly out of date / not precisely real-time.
 - Could be improved by reconfiguring concurrency / parallel computing settings, or by redesigining project to use a data streaming service, such as Kafka.
 
-
 ### Flask App
 
 We designed the Flask app to extract data from the analytical database and then perform transformations on it, converting it to a usable format for the metrics dashboard.
@@ -123,6 +122,18 @@ For more information on the metrics used and on how they were extracted, see the
 [Dashboard Metrics](/notebooks/dashboard_metrics.ipynb)
 
 ![dashboard_overview](/images/forage_dashboard.png)
+
+### Demo Day
+
+As a final part of the project, we presented and demonstrated our application to stakeholders, internal and external to Makers Academy, including some with a non-technical background.
+
+## Conclusion
+
+In one week, the team and I developed an ETL pipeline which batch processed raw data from 20 different sources, transformed it into valuable insights and presented it in an attractive and intuitive metrics dashboard.
+
+The entire application was hosted in the Cloud and automated, allowing resources to be fully accessible and for our dashboard to be continuously refreshed with the most current data.
+
+Our application provided near real-time insights which could be used to guide policy and influence decision-makers across the world.
 
 <hr>
 
