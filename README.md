@@ -63,6 +63,8 @@ Tasks and order of flow defined in a Directed Acyclic Graph (DAG):
 
 [pisa_dag](/airflow/pisa_dag.py)
 
+![overview_of_dag_flow](/images/dag_flow.png)
+
 DAG scheduled to run every 30 seconds to continuously and automatically keep pulling any new submissions, pooling them into a central database on which our dashboard was based.
 
 Benefits of approach:
@@ -71,8 +73,8 @@ Benefits of approach:
 - **Data Integrity** - checks made for duplicates and conflicts updated with new values, to ensure integrity and freshness of data.
 
 Disadvantage:
-- Minimum runtime of the DAG was 15 seconds, meaning the analytical database would not be precisely real-time.
-- Could be improved by increasing the number of threads / parallel computing, or by resigning project to use a data streaming service, such as Kafka.
+- Minimum runtime of the DAG was 15 seconds, meaning the analytical database would be slightly out of date / not exactly real-time.
+- Could be improved by reconfiguring concurrency / parallelism settings, or by redesigining project to use a data streaming service, such as Kafka.
 
 
 ### Real-Time Data Visualization
