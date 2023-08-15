@@ -1,20 +1,34 @@
 # PISA Project
 
-The final project of the Makers Data Engineering specialist track. This was a team project, completed with two others.
-
-## About Global Education Insights (GEI)
-
-Global Education Insights (GEI) is a non-profit organisation dedicated to improving education systems worldwide. They work with governments, educational institutions, and stakeholders to provide data-driven insights and recommendations for educational policy and practice.
+The final project of the Makers Data Engineering specialist track.
 
 ## Project Overview
 
-The goal of this project is to leverage data engineering skills to analyse the PISA 2018 dataset and develop a functioning dashboard that GEI can use to easily visualise and interpret the data. The project is carried out in a distributed environment in the Cloud to allow for efficient data processing and collaboration.
+The goal of the project was to leverage data engineering skills to analyse the PISA 2018 dataset and develop a functioning dashboard that GEI can use to easily visualise and interpret the data. The project is carried out in a distributed environment in the Cloud to allow for efficient data processing and collaboration.
 
-## Project Objectives
+I completed the project in a team, with two other colleagues.
 
-The project has three levels of challenge:
+### About Global Education Insights (GEI)
 
-- **Level 1:** Develop Forage charts displaying correct summary data that is no more than an hour old.
+Global Education Insights (GEI) is a non-profit organisation dedicated to improving education systems worldwide. They work with governments, educational institutions, and stakeholders to provide data-driven insights and recommendations for educational policy and practice.
+
+### About PISA and the Dataset
+
+PISA is the OECD's "Programme for International Student Assessment", which assesses educational practices around the world and uses its findings to influence policy.
+
+The dataset used in this project is a real-life dataset, collected in 2018 by PISA. It contains responses from hundreds of thousands of students, teachers and educational facilitators from 79 countries, providing information about their backgrounds and experiences in education.
+
+For more information about the 2018 dataset, please follow this [link](https://www.oecd.org/pisa/data/2018database/).
+
+For the purposes of this project, we will be looking at a sample of **20 countries**. Responses will be submitted gradually over time, to simulate the real-life scenario of collecting data. 
+
+The dataset begins at around 100 responses, but grows to over 100,000 in little over a week's time.
+
+### Project Objectives
+
+The project had three levels of challenge:
+
+- **Level 1:** Develop dashboard charts displaying correct summary data that is no more than an hour old.
 - **Level 2:** Same as Level 1, but the data should be no more than a minute old.
 - **Level 3:** Same as Level 2, but the data should be up-to-the-second.
 
