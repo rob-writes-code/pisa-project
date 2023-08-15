@@ -34,11 +34,28 @@ The project had three levels of challenge:
 
 ## Solution Overview
 
-The Forage Dashboard solution is not only feature-rich but also deeply automated and persistent, making it an indispensable tool for Global Education Insights (GEI) to derive data-driven insights in real-time. Let's delve into the details of how this solution remains current and always accessible:
+For our solution we implemented the following:
+
+- Airflow to routinely extract data from 20 source databases and load into an analytical database held on AWS RDS
+- Flask app to transform and serve data to our dashboard app
+- Dashboard app tp poll endpoint each second to constantly update data visualisations as responses are submitted
+- All running in the Cloud, using AWS EC2 and Render (PaaS provider)
+
+Data Pipeline - Planning Stage
+![pipeline_plan](/images/pipeline_plan.png)
+
+Data Pipeline - Implemented
+![pipeline_implemented](/images/pipeline_implemented.png)
+
+
 
 ### Stack
 
 ![project_stack](./images/pisa-project-stack.png)
+
+### Airflow
+
+
 
 ### Automated Data Collection and Integration
 
