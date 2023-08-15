@@ -125,7 +125,7 @@ For more information on the metrics used and on how they were extracted, see the
 
 ### Demo Day
 
-As a final part of the project, we presented and demonstrated our application to stakeholders, internal and external to Makers Academy, including some with a non-technical background.
+As a final part of the project, we presented and demonstrated our application to stakeholders, internal and external to Makers Academy, with the audience a mix of technical and non-technical backgrounds.
 
 ## Conclusion
 
