@@ -20,9 +20,9 @@ The dataset used in this project is a real-life dataset, collected in 2018 by PI
 
 For more information about the 2018 dataset, please follow this [link](https://www.oecd.org/pisa/data/2018database/).
 
-For the purposes of this project, we will be looking at a sample of **20 countries**. Responses will be submitted gradually over time, to simulate the real-life scenario of collecting data. 
+For the purposes of this project, we took a sample of **20 countries**. Responses were submitted gradually over time, to simulate the real-life scenario of collecting data. 
 
-The dataset begins at around 100 responses, but grows to over 100,000 in little over a week's time.
+The dataset began at around 100 responses, but grew to over 100,000 in little over a week's time.
 
 ### Project Objectives
 
