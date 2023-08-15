@@ -32,9 +32,10 @@ Extract from the raw data:
 ![raw_data_extract](/images/raw_data_extract.png)
 
 Structure
-- 20 source databases, each holding data a different country
-- 1,120 columns
-- Column names coded, PISA index required to decode and find insights
+- 20 source databases, each holding data from a different country
+- 1,120 columns in each database
+- Varying amounts of rows in each database, but all constantly growing over time
+- Column names coded, PISA index required to decode data
 
 ### Project Objectives
 
@@ -60,7 +61,6 @@ Data Pipeline - Planning Stage
 
 Data Pipeline - Implemented
 ![pipeline_implemented](/images/pipeline_implemented.png)
-
 
 ### Stack
 
@@ -94,25 +94,27 @@ Limitations:
 
 ### Flask App
 
+The full code for this app (with comments) can be accessed here, in the 'render' directory of this repository:
 
+[Flask App](/render/app.py)
 
-### Real-Time Data Visualization
+### Dashboard
 
-The web application, programmed in Python using Flask and hosted on a render.com web service, takes center stage in delivering real-time insights. As users interact with the dashboard, they're effectively accessing live data from the central AWS RDS. The automated DAGs ensure that the dataset feeding into the dashboard is always reflective of the latest developments, fostering accurate, real-time analysis and decision-making.
+#### Forage
 
-### Apache Airflow DAGs: Automation Backbone
+The dashboard was supplied to us by Makers. It was a custom React app, named "Forage", designed to accept data in `json` format.
 
-The automated data collection and integration process is executed through the use of Apache Airflow DAGs. These DAGs facilitate the seamless extraction, transformation, and loading (ETL) of data from the distributed AWS RDS sources into the central repository. The DAGs ensure the solution's persistence by continuously refreshing the dataset, providing the dashboard with an ever-evolving pool of data.
+We reverse engineered the dashboard app to ascertain the format our data needed to be in for the app to function correctly.
 
-### Render.com: Continuous Deployment
+The dashboard was configured to poll a url every second, so that the visualisations would constantly update with new data, providing real-time insights.
 
-The Forage Dashboard remains accessible and available. By hosting the Flask application on render.com, the solution achieves continuous deployment, ensuring that the dashboard is always ready to be accessed by GEI. This continuous availability is crucial for maintaining a persistent connection to real-time data insights.
+**Overview of the completed dashboard:**
 
-### Empowering Data-Driven Decisions
+For more information on the metrics used and on how they were extracted, see the below notebook:
 
-The automated and persistent nature of the Forage Dashboard empowers GEI to make data-driven decisions without interruption. The Airflow DAGs ensure that the dataset is perpetually refreshed, enabling the visualisation of real-time trends and patterns. Render.com guarantees that the dashboard is always accessible, whether on a desktop or mobile device, enhancing the user experience and fostering effective decision-making.
+[Dashboard Metrics](/notebooks/dashboard_metrics.ipynb)
 
-By combining Apache Airflow's automation capabilities with render.com's continuous deployment, the Forage Dashboard remains an innovative solution that bridges data science and accessibility for informed education policy and practice improvements.
+![dashboard_overview](/images/forage_dashboard.png)
 
 <hr>
 
