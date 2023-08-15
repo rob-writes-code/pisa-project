@@ -51,15 +51,29 @@ Data Pipeline - Implemented
 
 ### Stack
 
+The tech stack used in this project.
+
 ![project_stack](./images/pisa-project-stack.png)
 
-### Airflow
+### Apache Airflow
 
+Workflow orchestration tool used to pull data from 20 source databases and load them into an analytical database held on AWS RDS.
 
+Tasks and order of flow defined in a Directed Acyclic Graph (DAG):
 
-### Automated Data Collection and Integration
+[pisa_dag](/airflow/pisa_dag.py)
 
-The foundation of this solution is built upon 20 Apache Airflow DAGs that execute continuously and autonomously. These DAGs orchestrate the collection and integration of data from 20 distinct AWS RDS sources. This process ensures that the central AWS RDS, which the Forage Dashboard relies upon, is continuously updated with the latest information every 30 seconds. By pooling data from these distributed sources, the dashboard guarantees a comprehensive and up-to-date perspective.
+DAG scheduled to run every 30 seconds to continuously and automatically keep pulling any new submissions, pooling them into a central database on which our dashboard was based.
+
+Benefits of approach:
+- **Resusable** - code accepts list of countries; more can easily be added to increase scope of project.
+- **Scalable** - designed to only extract new entries to reduce latency. Runtime remained consistent, despite growing dataset.
+- **Data Integrity** - checks made for duplicates and conflicts updated with new values, to ensure integrity and freshness of data.
+
+Disadvantage:
+- Minimum runtime of the DAG was 15 seconds, meaning the analytical database would not be precisely real-time.
+- Could be improved by increasing the number of threads / parallel computing, or by resigning project to use a data streaming service, such as Kafka.
+
 
 ### Real-Time Data Visualization
 
@@ -75,7 +89,7 @@ The Forage Dashboard remains accessible and available. By hosting the Flask appl
 
 ### Empowering Data-Driven Decisions
 
-The deeply automated and persistent nature of the Forage Dashboard empowers GEI to make data-driven decisions without interruption. The Airflow DAGs ensure that the dataset is perpetually refreshed, enabling the visualisation of real-time trends and patterns. Render.com guarantees that the dashboard is always accessible, whether on a desktop or mobile device, enhancing the user experience and fostering effective decision-making.
+The automated and persistent nature of the Forage Dashboard empowers GEI to make data-driven decisions without interruption. The Airflow DAGs ensure that the dataset is perpetually refreshed, enabling the visualisation of real-time trends and patterns. Render.com guarantees that the dashboard is always accessible, whether on a desktop or mobile device, enhancing the user experience and fostering effective decision-making.
 
 By combining Apache Airflow's automation capabilities with render.com's continuous deployment, the Forage Dashboard remains an innovative solution that bridges data science and accessibility for informed education policy and practice improvements.
 
