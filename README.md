@@ -53,7 +53,7 @@ For our solution we implemented the following:
 
 - Airflow to routinely extract data from 20 source databases and load into an analytical database held on AWS RDS
 - Flask app to transform and serve data to our dashboard app
-- Dashboard app tp poll endpoint each second to constantly update data visualisations as responses are submitted
+- Dashboard app to poll endpoint each second to constantly update data visualisations as responses are submitted
 - All running in the Cloud, using AWS EC2 and Render (PaaS provider)
 
 Data Pipeline - Planning Stage
